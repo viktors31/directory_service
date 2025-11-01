@@ -1,8 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using DirectoryService.Domain.Department;
-using DirectoryService.Domain.ValueObjects;
 
-namespace DirectoryService.Domain.Entities;
+namespace DirectoryService.Domain.Department;
 
 public class Department : Entity<DepartmentId>
 {
@@ -26,14 +24,14 @@ public class Department : Entity<DepartmentId>
     public Department? Parent { get; private set; } // Родительское подразделение. Навигационное (родитель)
 
     // связь с локациями (many - many, промежуточная сущность DepatmentLocation)
-    private List<Location> _locations = [];
+    private List<DepartmentLocation> _locations = [];
 
-    public IReadOnlyList<Location> Locations => _locations.AsReadOnly();
+    public IReadOnlyList<DepartmentLocation> Locations => _locations.AsReadOnly();
 
     // Связь с позициями (many - many, промежуточная сущность DepartmentPosition)
-    private List<Position> _positions = [];
+    private List<DepartmentPosition> _positions = [];
 
-    public IReadOnlyList<Position> Positions => _positions.AsReadOnly();
+    public IReadOnlyList<DepartmentPosition> Positions => _positions.AsReadOnly();
 
     private Department(
         DepartmentId id,
@@ -41,9 +39,7 @@ public class Department : Entity<DepartmentId>
         DepartmentIdentifier identifier,
         DepartmentId? parentId,
         DepartmentPath path,
-        short depth,
-        List<Location> locations,
-        List<Position>? positions = null)
+        short depth)
     {
         Id = id;
         Name = name;
@@ -54,8 +50,6 @@ public class Department : Entity<DepartmentId>
         IsActive = true;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
-        _locations = locations;
-        _positions = positions ?? _positions;
     }
 
     #pragma warning disable CS8618 // чтобы не ругался на пустой конструктор
@@ -64,13 +58,9 @@ public class Department : Entity<DepartmentId>
     public static Result<Department, string> Create(
         DepartmentName name,
         DepartmentIdentifier identifier,
-        List<Location> locations,
-        List<Position>? positions = null,
         Department? parent = null,
         DepartmentId? id = null)
     {
-        if (!locations.Any())
-            return Result.Failure<Department, string>("Locations can not be empty");
         DepartmentId? parentId;
         DepartmentPath path;
         short depth;
@@ -93,8 +83,6 @@ public class Department : Entity<DepartmentId>
             identifier,
             parentId,
             path,
-            depth,
-            locations,
-            positions);
+            depth);
     }
 }

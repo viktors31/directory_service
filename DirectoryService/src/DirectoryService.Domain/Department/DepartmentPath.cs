@@ -1,8 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using CSharpFunctionalExtensions;
-using DirectoryService.Domain.Entities;
+﻿using CSharpFunctionalExtensions;
 
-namespace DirectoryService.Domain.ValueObjects;
+namespace DirectoryService.Domain.Department;
 
 public class DepartmentPath : ValueObject
 {

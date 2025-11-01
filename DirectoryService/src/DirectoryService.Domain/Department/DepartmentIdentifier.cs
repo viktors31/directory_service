@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 
-namespace DirectoryService.Domain.ValueObjects;
+namespace DirectoryService.Domain.Department;
 
 public class DepartmentIdentifier : ValueObject
 {

@@ -4,17 +4,17 @@ namespace DirectoryService.Domain.Location;
 
 public class Address : ValueObject
 {
-    public string Country { get; private set; }
+    public string Country { get; }
 
-    public string City { get; private set; }
+    public string City { get; }
 
-    public string Street { get; private set; }
+    public string Street { get; }
 
-    public string PostalCode { get; private set; }
+    public string PostalCode { get; }
 
-    public string Building { get; private set; }
+    public string Building { get; }
 
-    public int Room { get; private set; }
+    public int Room { get; }
 
     private Address(string country, string city, string street, string postalCode, string building, int room)
     {
